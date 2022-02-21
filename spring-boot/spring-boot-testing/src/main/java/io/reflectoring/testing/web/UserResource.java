@@ -10,13 +10,11 @@ import lombok.Value;
 @Value
 public class UserResource {
 
-  @NotNull
-  private final String name;
+  @NotNull String name;
 
-  @NotNull
-  private final String email;
+  @NotNull String email;
 
-  private LocalDateTime registrationDate;
+  LocalDateTime registrationDate;
 
   public UserResource(
           @JsonProperty("name") String name,

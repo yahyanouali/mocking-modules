@@ -1,4 +1,4 @@
-package io.reflectoring.testing.web;
+package io.reflectoring.testing.web.validation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

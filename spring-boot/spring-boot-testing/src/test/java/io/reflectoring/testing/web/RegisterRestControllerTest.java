@@ -3,20 +3,23 @@ package io.reflectoring.testing.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.reflectoring.testing.domain.RegisterUseCase;
 import io.reflectoring.testing.domain.User;
+import io.reflectoring.testing.web.validation.ErrorResult;
+import io.reflectoring.testing.web.validation.FieldValidationError;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import static io.reflectoring.testing.web.ResponseBodyMatchers.*;
-import static org.assertj.core.api.Java6Assertions.*;
+
+import java.util.List;
+
+import static io.reflectoring.testing.web.ResponseBodyMatchers.responseBody;
+import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = RegisterRestController.class)
 class RegisterRestControllerTest {
@@ -166,6 +169,21 @@ class RegisterRestControllerTest {
             .content(objectMapper.writeValueAsString(user)))
             .andExpect(status().isBadRequest())
             .andExpect(responseBody().containsError("name", "must not be null"));
+  }
+
+  @Test
+  void whenMultipleNullValue_thenReturns400AndErrorResult_withFluentApi() throws Exception {
+    UserResource user = new UserResource(null, null);
+    ErrorResult expectedError = new ErrorResult(
+            List.of(new FieldValidationError("name", "must not be null"),
+                    new FieldValidationError("email", "must not be null")));
+
+    mockMvc.perform(post("/forums/{forumId}/register", 42L)
+                    .contentType("application/json")
+                    .param("sendWelcomeMail", "true")
+                    .content(objectMapper.writeValueAsString(user)))
+            .andExpect(status().isBadRequest())
+            .andExpect(responseBody().containsErrors(expectedError));
   }
 
 }

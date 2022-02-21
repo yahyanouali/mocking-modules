@@ -1,4 +1,4 @@
-package io.reflectoring.testing.web;
+package io.reflectoring.testing.web.validation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

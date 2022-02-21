@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.reflectoring.testing.web.validation.ErrorResult;
+import io.reflectoring.testing.web.validation.FieldValidationError;
 import org.springframework.test.web.servlet.ResultMatcher;
 import static org.assertj.core.api.Java6Assertions.*;
 
@@ -30,10 +32,23 @@ public class ResponseBodyMatchers {
               .collect(Collectors.toList());
 
       assertThat(fieldErrors)
-              .hasSize(1)
               .withFailMessage("expecting exactly 1 error message with field name '%s' and message '%s'",
                       expectedFieldName,
-                      expectedMessage);
+                      expectedMessage)
+              .hasSize(1);
+    };
+  }
+
+  public ResultMatcher containsErrors(ErrorResult expectedError) {
+    return mvcResult -> {
+      String json = mvcResult.getResponse().getContentAsString();
+      ErrorResult actualError = objectMapper.readValue(json, ErrorResult.class);
+
+      assertThat(actualError.getFieldErrors())
+              .withFailMessage("expected error %s doesn't match the actual error %s ",
+                      expectedError.getFieldErrors(),
+                      actualError.getFieldErrors())
+              .hasSameElementsAs(expectedError.getFieldErrors());
     };
   }
 
