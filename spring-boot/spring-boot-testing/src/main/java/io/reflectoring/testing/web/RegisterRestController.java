@@ -18,7 +18,7 @@ class RegisterRestController {
   private final RegisterUseCase registerUseCase;
 
   @PostMapping("/forums/{forumId}/register")
-  UserResource register(
+  public UserResource register(
           @PathVariable("forumId") Long forumId,
           @Valid @RequestBody UserResource userResource,
           @RequestParam("sendWelcomeMail") boolean sendWelcomeMail) {

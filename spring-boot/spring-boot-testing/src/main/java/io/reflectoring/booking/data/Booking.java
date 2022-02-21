@@ -1,11 +1,10 @@
 package io.reflectoring.booking.data;
 
-import javax.persistence.*;
-
 import io.reflectoring.customer.data.Customer;
-import io.reflectoring.flight.data.Flight;
 import lombok.Builder;
 import lombok.Data;
+
+import javax.persistence.*;
 
 @Entity
 @Data

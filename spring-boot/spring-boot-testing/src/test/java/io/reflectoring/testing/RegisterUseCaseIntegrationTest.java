@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.flyway.enabled=false"
 })
 @AutoConfigureMockMvc
-public class RegisterUseCaseIntegrationTest {
+class RegisterUseCaseIntegrationTest {
 
   @Autowired
   private MockMvc mockMvc;

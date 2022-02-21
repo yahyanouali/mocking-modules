@@ -2,6 +2,7 @@ package io.reflectoring.booking;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ class BookingTestConfigurationTest {
   }
   @Test
   void bookingConfigurationLoads() {
+    Assertions.assertTrue(true);
   }
 
 }

@@ -35,11 +35,11 @@ class BookingServiceTest {
   void bookFlightReturnsBooking() {
     when(customerRepository.findById(42L)).thenReturn(customer());
     when(flightService.findFlight("Oceanic 815")).thenReturn(flight());
-    when(bookingRepository.save(eq(booking()))).thenReturn(booking());
+    when(bookingRepository.save(booking())).thenReturn(booking());
     Booking booking = bookingService.bookFlight(42L, "Oceanic 815");
 
     assertThat(booking).isNotNull();
-    verify(bookingRepository).save(eq(booking));
+    verify(bookingRepository).save(booking);
 
   }
 
