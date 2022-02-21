@@ -1,4 +1,4 @@
-package io.pratik.restclient;
+package io.pratik;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-public class RestclientApplication {
+public class RestClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RestclientApplication.class, args);
+		SpringApplication.run(RestClientApplication.class, args);
 	}
 	
 	@Bean
@@ -18,6 +18,5 @@ public class RestclientApplication {
 		return builder.build();
 	}
 
-	
 
 }
