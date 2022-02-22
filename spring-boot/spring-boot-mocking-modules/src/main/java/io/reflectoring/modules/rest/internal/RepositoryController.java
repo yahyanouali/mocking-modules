@@ -20,8 +20,8 @@ class RepositoryController {
     public RepositoryController(
             GitHubMutations gitHubMutations,
             GitHubQueries gitHubQueries,
-            EmailNotificationService emailNotificationService
-    ) {
+            EmailNotificationService emailNotificationService) {
+
         this.gitHubMutations = gitHubMutations;
         this.gitHubQueries = gitHubQueries;
         this.emailNotificationService = emailNotificationService;
@@ -31,13 +31,14 @@ class RepositoryController {
     ResponseEntity<Void> createGitHubRepository(
             @RequestParam("token") String token,
             @RequestParam("repositoryName") String repoName,
-            @RequestParam("organizationName") String orgName
-    ) {
+            @RequestParam("organizationName") String orgName) {
 
         if (gitHubQueries.repositoryExists(token, repoName, orgName)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+
         String repoUrl = gitHubMutations.createRepository(token, new GitHubRepository(repoName, orgName));
+
         emailNotificationService.sendEmail("user@mail.com", "Your new repository", "Here's your new repository: " + repoUrl);
 
         return ResponseEntity.ok().build();
